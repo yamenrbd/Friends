@@ -26,7 +26,7 @@ public class FriendsDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE "+ Tables.FRIENDS "("
+        db.execSQL("CREATE TABLE "+ Tables.FRIENDS + "("
                 + BaseColumns._ID+ " INTEGER PRIMARY KEY AUTOINCREMINT,"
                 + FriendsContract.FriendsColumns.FRIENDS_NAME+" TEXT NOT NULL ,"
                 + FriendsContract.FriendsColumns.FRIENDS_EMAIL+" TEXT NOT NULL,"
@@ -35,6 +35,18 @@ public class FriendsDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        int version = oldVersion;
+        if (version == 1){
+            //add some extra filed to database without deleting any data
+            version=2;
+        }
+        if(version!=DATABASE_VERSION){
+            db.execSQL("DROP TABLE IF EXISTS"+Tables.FRIENDS);
+            onCreate(db);
+        }
 
+    }
+    public static void deleteDatabase(Context context){
+        context.deleteDatabase(DATABASE_NAME);
     }
 }
