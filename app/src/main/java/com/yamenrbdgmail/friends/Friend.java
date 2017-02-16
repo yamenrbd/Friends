@@ -4,13 +4,13 @@ package com.yamenrbdgmail.friends;
  * Created by yamen on 2/16/2017.
  */
 
-public class Friends {
+public class Friend {
     private int _id;
     private String name;
     private String phone;
     private String email;
 
-    public Friends(int _id, String name, String phone, String email) {
+    public Friend(int _id, String name, String phone, String email) {
         this._id = _id;
         this.name = name;
         this.phone = phone;
