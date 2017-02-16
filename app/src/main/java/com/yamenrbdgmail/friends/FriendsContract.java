@@ -9,13 +9,16 @@ import android.provider.BaseColumns;
 
 public class FriendsContract {
     interface FriendsColumns{
+        String FRIENDS_ID ="_id";
         String FRIENDS_NAME = "friends_name";
         String FRIENDS_EMAIL = "friends_email";
         String FRIENDS_PHONE = "friends_phone";
     }
-    public static final String CONTENT_AUTHORITY ="org.yamenrbdgmail.android.friends.provider";
+    public static final String CONTENT_AUTHORITY ="com.yamenrbdgmail.friends.provider";
     public static final Uri BASE_CONTENT_URI =Uri.parse("content://" +CONTENT_AUTHORITY);
+
     public static final String PATH_FRIENDS ="friends";
+    public static final Uri URI_TABLE =Uri.parse(BASE_CONTENT_URI.toString()+"/"+PATH_FRIENDS);
 
     private static final String [] TOP_LEVEL_PATH={
             PATH_FRIENDS

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yamenrbdgmail.friends">
+    <permission android:name="com.yamenrbdgmail.friends.provider.READWRITE"/>
+    <uses-permission android:name="com.yamenrbdgmail.friends.provider.READWRITE"/>
+
 
     <application
         android:allowBackup="true"
@@ -18,6 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.yamenrbdgmail.friends.provider.READWRITE"
+            android:name="com.yamenrbdgmail.friends.FriendsProvider"
+            android:exported="true"
+            android:readPermission="com.yamenrbdgmail.friends.provider.READWRITE"
+            android:writePermission="com.yamenrbdgmail.friends.provider.READWRITE"/>
+
     </application>
 
 </manifest>
