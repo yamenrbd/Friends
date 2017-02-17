@@ -63,7 +63,7 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>>{
             }
         }
         List<Friend> oldFriendList =mFriends;
-        if(mFriends==null |mFriends.size()==0){
+        if(mFriends==null || mFriends.size()==0){
             Log.d(LOG_TAG,"+++++++++++++ no data returned");
         }
         mFriends = friends;
@@ -73,5 +73,42 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>>{
         if(oldFriendList!=null|oldFriendList!=friends){
             mCursor.close();
         }
+    }
+
+    @Override
+    protected void onStartLoading() {
+        if(mFriends!=null){
+            deliverResult(mFriends);
+        }
+        if(takeContentChanged()||mFriends==null){
+            forceLoad();
+        }
+    }
+
+    @Override
+    protected void onStopLoading() {
+        cancelLoad();
+    }
+
+    @Override
+    protected void onReset() {
+        onStopLoading();
+        if(mCursor!=null){
+            mCursor.close();
+        }
+        mFriends=null;
+    }
+
+    @Override
+    public void onCanceled(List<Friend> friends) {
+        super.onCanceled(friends);
+        if(mCursor!=null){
+            mCursor.close();
+        }
+    }
+
+    @Override
+    public void forceLoad() {
+        super.forceLoad();
     }
 }
