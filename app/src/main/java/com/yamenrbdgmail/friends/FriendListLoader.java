@@ -1,11 +1,12 @@
 package com.yamenrbdgmail.friends;
 
-import android.content.AsyncTaskLoader;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by yamen on 2/16/2017.
  */
 
-public class FriendListLoader extends AsyncTaskLoader<List<Friend>>{
+public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
     private static final String LOG_TAG = FriendListLoader.class.getSimpleName();
     private List<Friend> mFriends;
     private ContentResolver mContentResolver;
