@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,11 +19,12 @@ import android.widget.TextView;
  */
 
 public class FriendsDialog extends DialogFragment{
+    private static final String LOG_TAG = FriendsDialog.class.getSimpleName();
     public LayoutInflater mLayoutInflater;
     public static String DIALOG_TYPE ="command";
     public static String DELETE_RECORD ="deleteRecord";
     public static String DELETE_DATABASE ="deleteDatabase";
-
+    public static final String CONFIRM_EXIT ="confirmExit";
 
     @NonNull
     @Override
@@ -49,8 +51,6 @@ public class FriendsDialog extends DialogFragment{
             });
         }
         else if (command.equals(DELETE_DATABASE)){
-            final int _id = getArguments().getInt(FriendsContract.FriendsColumns.FRIENDS_ID);
-            String name = getArguments().getString(FriendsContract.FriendsColumns.FRIENDS_NAME);
             TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
             popupMessage.setText("are you sure you want to delete entire databse ?");
             builder.setView(view).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -64,6 +64,18 @@ public class FriendsDialog extends DialogFragment{
                     startActivity(intent);
                 }
             });
+        }else if(command.equals(CONFIRM_EXIT)){
+            TextView popupMessage = (TextView) view.findViewById(R.id.popup_message);
+            popupMessage.setText("are you sure you want to exit with out saving ?");
+            builder.setView(view).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    getActivity().finish();
+                }
+            });
+
+        }else{
+            Log.d(LOG_TAG,"invaild command pass as parameter");
         }
         return builder.create();
     }
