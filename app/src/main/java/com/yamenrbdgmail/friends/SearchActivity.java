@@ -52,7 +52,7 @@ implements LoaderManager.LoaderCallbacks<List<Friend>> {
 
     @Override
     public Loader<List<Friend>> onCreateLoader(int id, Bundle args) {
-        return new FriendsSearchListLoader(SearchActivity.this,FriendsContract.URI_TABLE,this.mContentResolver,matchText);
+        return new FriendSearchListLoader(SearchActivity.this,FriendsContract.URI_TABLE,this.mContentResolver,matchText);
 
     }
 
