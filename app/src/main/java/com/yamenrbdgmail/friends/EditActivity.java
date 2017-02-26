@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -25,7 +24,7 @@ public class EditActivity extends FragmentActivity{
     private ContentResolver mContentResolver;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -33,7 +32,9 @@ public class EditActivity extends FragmentActivity{
         mNameTextView = (TextView) findViewById(R.id.friendName);
         mEmailTextView =(TextView) findViewById(R.id.friendEmail);
         mPhoneTextView = (TextView) findViewById(R.id.friendPhone);
+
         mContentResolver =EditActivity.this.getContentResolver();
+
         Intent intent =getIntent();
         final String _id =intent.getStringExtra(FriendsContract.FriendsColumns.FRIENDS_ID);
         String name = intent.getStringExtra(FriendsContract.FriendsColumns.FRIENDS_NAME);

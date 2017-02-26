@@ -23,15 +23,15 @@
         </activity>
         <activity android:name=".AddActivity"
             android:parentActivityName=".MainActivity"
-            android:label="Add friend title"/>
+            android:label="@string/add_friend_title"/>
 
         <activity android:name=".EditActivity"
                   android:parentActivityName=".MainActivity"
-                  android:label="Edit friend"/>
+                  android:label="@string/edit_frien_tiltle"/>
 
         <activity android:name=".SearchActivity"
                   android:parentActivityName=".MainActivity"
-                  android:label="Search friends"/>
+                  android:label="@string/search_friend_title"/>
         <provider
             android:authorities="com.yamenrbdgmail.friends.provider.READWRITE"
             android:name="com.yamenrbdgmail.friends.FriendsProvider"

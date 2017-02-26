@@ -2,7 +2,6 @@ package com.yamenrbdgmail.friends;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -23,7 +22,7 @@ public class FriendsListFragment extends ListFragment
     private List<Friend> mFriends ;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         mContentResolver = getActivity().getContentResolver();

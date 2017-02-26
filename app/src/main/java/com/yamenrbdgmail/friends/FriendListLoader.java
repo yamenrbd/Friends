@@ -20,7 +20,7 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
     private static final String LOG_TAG = FriendListLoader.class.getSimpleName();
     private List<Friend> mFriends;
     private ContentResolver mContentResolver;
-    Cursor mCursor;
+    private Cursor mCursor;
 
     public FriendListLoader(Context context , Uri uri , ContentResolver contentResolver){
         super(context);
@@ -37,7 +37,7 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
         List<Friend> entries = new ArrayList<Friend>();
 
         mCursor = mContentResolver.query(FriendsContract.URI_TABLE,projection,null,null,null);
-        if(mContentResolver !=null){
+        if(mCursor !=null){
             if(mCursor.moveToFirst()){
                 do{
                     int _id = mCursor.getInt(mCursor.getColumnIndex(BaseColumns._ID));
@@ -71,7 +71,7 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
         if(isStarted()){
             super.deliverResult(friends);
         }
-        if(oldFriendList!=null|oldFriendList!=friends){
+        if(oldFriendList!=null && oldFriendList!=friends){
             mCursor.close();
         }
     }
@@ -81,7 +81,7 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
         if(mFriends!=null){
             deliverResult(mFriends);
         }
-        if(takeContentChanged()||mFriends==null){
+        if(takeContentChanged()|| mFriends==null){
             forceLoad();
         }
     }

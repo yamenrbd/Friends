@@ -13,7 +13,7 @@ public class FriendsDatabase extends SQLiteOpenHelper {
     private static final String TAG = FriendsDatabase.class.getSimpleName();
     private static final String DATABASE_NAME = "friends.db";
     private static final int DATABASE_VERSION = 2;
-    private Context mContext;
+    private final Context mContext;
 
     interface Tables {
         String FRIENDS ="friends";
@@ -26,9 +26,9 @@ public class FriendsDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE "+ Tables.FRIENDS + "("
-                + BaseColumns._ID+ " INTEGER PRIMARY KEY AUTOINCREMINT,"
-                + FriendsContract.FriendsColumns.FRIENDS_NAME+" TEXT NOT NULL ,"
+        db.execSQL("CREATE TABLE "+ Tables.FRIENDS + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + FriendsContract.FriendsColumns.FRIENDS_NAME+" TEXT NOT NULL,"
                 + FriendsContract.FriendsColumns.FRIENDS_EMAIL+" TEXT NOT NULL,"
                 + FriendsContract.FriendsColumns.FRIENDS_PHONE+" TEXT NOT NULL)");
     }

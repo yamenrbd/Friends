@@ -21,23 +21,23 @@ public class FriendSearchListLoader extends AsyncTaskLoader<List<Friend>> {
     private List<Friend> mFriends;
     private ContentResolver mContentResolver;
     private Cursor mCursor;
-    private String mfilterText;
+    private String mFilterText;
 
     public FriendSearchListLoader(Context context , Uri uri , ContentResolver contentResolver ,String filterText){
         super(context);
         mContentResolver = contentResolver ;
-        mfilterText =filterText;
+        mFilterText =filterText;
     }
 
     @Override
     public List<Friend> loadInBackground() {
         String [] projection = {BaseColumns._ID,
-        FriendsContract.Friends.FRIENDS_NAME,
-        FriendsContract.Friends.FRIENDS_PHONE,
-        FriendsContract.Friends.FRIENDS_EMAIL };
+        FriendsContract.FriendsColumns.FRIENDS_NAME,
+        FriendsContract.FriendsColumns.FRIENDS_PHONE,
+        FriendsContract.FriendsColumns.FRIENDS_EMAIL };
         List<Friend> entries = new ArrayList<Friend>();
 
-        String selection = FriendsContract.FriendsColumns.FRIENDS_NAME +" LIKE "+mfilterText+"%";
+        String selection = FriendsContract.FriendsColumns.FRIENDS_NAME +" LIKE "+ mFilterText +"%";
 
         mCursor = mContentResolver.query(FriendsContract.URI_TABLE,projection,selection,null,null);
         if(mCursor !=null){
@@ -74,7 +74,7 @@ public class FriendSearchListLoader extends AsyncTaskLoader<List<Friend>> {
         if(isStarted()){
             super.deliverResult(friends);
         }
-        if(oldFriendList!=null|oldFriendList!=friends){
+        if(oldFriendList!=null && oldFriendList!=friends){
             mCursor.close();
         }
     }

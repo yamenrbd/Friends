@@ -2,7 +2,6 @@ package com.yamenrbdgmail.friends;
 
 import android.content.ContentResolver;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -24,14 +23,14 @@ implements LoaderManager.LoaderCallbacks<List<Friend>> {
     private FriendsCustomAdapter mFriendsCustomAdapter;
     private static int LOADER_ID = 2;
     private ContentResolver mContentResolver;
-    private List<Friend> friendRetrived;
+    private List<Friend> friendsRetrieved;
     private ListView listView;
     private EditText mSearchEditText;
     private Button mSearchFriendButton;
     private String matchText;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_layout);
         listView = (ListView) findViewById(R.id.searchResultList);
@@ -59,7 +58,7 @@ implements LoaderManager.LoaderCallbacks<List<Friend>> {
     @Override
     public void onLoadFinished(Loader<List<Friend>> loader, List<Friend> friends) {
         mFriendsCustomAdapter.setData(friends);
-        this.friendRetrived = friends;
+        this.friendsRetrieved = friends;
     }
 
     @Override

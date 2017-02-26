@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -23,14 +22,14 @@ public class FriendsProvider extends ContentProvider{
     private static String TAG = FriendsProvider.class.getSimpleName();
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    private final static int FRIENDS=100;
-    private final static int FRIENDS_ID=101;
+    private static final int FRIENDS=100;
+    private static final int FRIENDS_ID=101;
 
     public static UriMatcher buildUriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = FriendsContract.CONTENT_AUTHORITY;
         matcher.addURI(authority,"friends",FRIENDS);
-        matcher.addURI(authority,"friends",FRIENDS_ID);
+        matcher.addURI(authority,"friends/*",FRIENDS_ID);
         return matcher;
     }
 
@@ -47,7 +46,6 @@ public class FriendsProvider extends ContentProvider{
 
     }
 
-    @Nullable
     @Override
     public String getType(Uri uri) {
         final int match = sUriMatcher.match(uri);
@@ -63,7 +61,7 @@ public class FriendsProvider extends ContentProvider{
 
     }
 
-    @Nullable
+
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
@@ -88,10 +86,10 @@ public class FriendsProvider extends ContentProvider{
 
     }
 
-    @Nullable
+
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        Log.v(TAG,"insert (uri = "+ uri+"values "+values.toString());
+        Log.v(TAG,"insert (uri = "+ uri+", values "+values.toString());
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match){
@@ -105,7 +103,7 @@ public class FriendsProvider extends ContentProvider{
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        Log.v(TAG,"update (uri = "+ uri+"values "+values.toString());
+        Log.v(TAG,"update (uri = "+ uri+", values "+values.toString());
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         String selectionCriteria =selection;
@@ -116,10 +114,10 @@ public class FriendsProvider extends ContentProvider{
             case FRIENDS_ID:
                 String id = FriendsContract.Friends.getFriendId(uri);
                 selectionCriteria = BaseColumns._ID+"="+id
-                        +(!TextUtils.isEmpty(selection) ? " AND ("+selection +")":"");
+                        +(!TextUtils.isEmpty(selection) ? " AND (" +selection + ")":"");
                 break;
             default:
-                throw new IllegalArgumentException("unknown uri "+ uri);
+                throw new IllegalArgumentException("unknown uri :"+ uri);
         }
         return db.update(FriendsDatabase.Tables.FRIENDS,values,selectionCriteria,selectionArgs);
     }
@@ -127,7 +125,7 @@ public class FriendsProvider extends ContentProvider{
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         Log.v(TAG,"delete (uri = "+ uri);
-        if(uri.equals(FriendsContract.BASE_CONTENT_URI)){
+        if(uri.equals(FriendsContract.URI_TABLE)){
             deleteDatabase();
             return 0;
         }
@@ -137,7 +135,7 @@ public class FriendsProvider extends ContentProvider{
             case FRIENDS_ID:
                 String id = FriendsContract.Friends.getFriendId(uri);
                 String selectionCriteria = BaseColumns._ID+"="+id
-                        +(!TextUtils.isEmpty(selection)? " AND ("+selection+")":"");
+                        +(!TextUtils.isEmpty(selection)? " AND (" +selection+ ")" : "");
                 return db.delete(FriendsDatabase.Tables.FRIENDS,selectionCriteria,selectionArgs);
 
             default:
